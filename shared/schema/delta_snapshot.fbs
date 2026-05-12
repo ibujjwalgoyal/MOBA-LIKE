@@ -1,0 +1,34 @@
+include "hero_state.fbs"
+include "game_event.fbs"
+
+namespace MOBA.Schema;
+
+table EntityDelta
+{
+    entity_id:uint;
+
+    position:Vec2;
+
+    health:int;
+    mana:int;
+
+    facing:int;
+
+    is_alive:bool;
+
+    gold:uint;
+    experience:uint;
+}
+
+table DeltaSnapshot
+{
+    tick:uint;
+
+    server_time_ms:ulong;
+
+    entities:[EntityDelta];
+
+    events:[GameEvent];
+}
+
+root_type DeltaSnapshot;

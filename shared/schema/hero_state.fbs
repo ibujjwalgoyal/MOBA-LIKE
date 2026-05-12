@@ -1,0 +1,54 @@
+namespace MOBA.Schema;
+
+enum Team : byte
+{
+    Neutral = 0,
+    Radiant = 1,
+    Dire = 2
+}
+
+table Vec2
+{
+    x:int;
+    y:int;
+}
+
+table StatusEffect
+{
+    effect_id:int;
+    stack:ushort;
+    duration_ms:uint;
+    source_entity_id:uint;
+}
+
+table HeroState
+{
+    entity_id:uint;
+    player_id:uint;
+
+    hero_name:string;
+    team:Team;
+
+    position:Vec2;
+    facing:int;
+
+    health:int;
+    max_health:int;
+
+    mana:int;
+    max_mana:int;
+
+    level:ushort;
+    experience:uint;
+
+    gold:uint;
+
+    movement_speed:int;
+
+    is_alive:bool;
+    respawn_time_ms:uint;
+
+    status_effect:[StatusEffect];
+}
+
+root_type HeroState;

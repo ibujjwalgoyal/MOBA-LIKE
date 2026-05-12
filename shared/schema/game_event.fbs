@@ -1,0 +1,34 @@
+namespace MOBA.Schema
+
+enum GameEventType : byte
+{
+    Unknown = 0,
+    HeroKiller = 1,
+    TowerDestroyed = 2,
+    AbilityCast = 3,
+    ItemPurchased = 4,
+    LevelUp = 5,
+    GoldEarned = 6,
+    MatchEnded = 7
+}
+
+table GameEvent
+{
+    tick:uint;
+    timestamp_ms:ulong;
+
+    event_type:GameEventType;
+
+    source_entity_id:uint;
+    target_entity_id:uint;
+
+    ability_id:uint;
+    item_id:uint;
+
+    gold_amount:uint;
+    experience_amount:uint;
+
+    message:string;
+}
+
+root_type GameEvent;
