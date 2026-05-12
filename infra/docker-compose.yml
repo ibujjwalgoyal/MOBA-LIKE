@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: moba-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: moba
+      POSTGRES_PASSWOD: moba_password
+      POSTGRES_DB: moba
+
+    ports:
+      - "5432:5432"
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moba"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    volumes:
+      - postgres_data: /var/lib/postgres/data
+  
+  redis:
+    image: redis:7
+    container_name: moba-redis
+    restart: unless-stopped
+
+    ports:
+      - "6379:6379"
+    
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    volumes:
+      - redis_data: /data
+  
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: moba-pgadmin
+    restart: unless-stopped
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@moba.local
+      PGADMIN_DEFAULT_PASSWORD: admin_password
+
+    ports:
+      - "5050:80"
+
+    depends_on:
+      postgres:
+          condition: service_healthy
+    
+    volumes:
+      pgadmin_data: /var/lib/pgadmin
+  
+volumes:
+  postgres_data:
+  redis_data:
+  pgadmin_data:
