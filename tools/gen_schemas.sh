@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirma,e "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SCHEMA_DIR="${ROOT_DIR}/shared/schema"
 CPP_OUT_DIR="${ROOT_DIR}/gameserver/gen"
 CS_OUT_DIR="${ROOT_DIR}/client/Assets/Generated"
