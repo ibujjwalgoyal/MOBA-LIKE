@@ -1,0 +1,92 @@
+name: MOBA CI
+
+on: 
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+
+jobs:
+
+  build-cpp:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run:
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake \
+            ninja-build \
+            g++ \
+            git \
+            curl \
+            zip \
+            unzip \
+            tar \
+            pkg-config
+      
+      - name: Configure
+        run: 
+          cmake -S gameserver -B gameserver/build -DCMAKE_BUILD_TYPE=Release
+      
+      - name: build
+        run: 
+          cmake --build gameserver/build -j
+
+      - name: Test
+        run:
+          ctest --test-dir gameserver/build --output-on-failure
+  
+  build-dotnet:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore
+        run:
+          cd backend
+          dotnet restore
+      
+      - name: Build
+        run: 
+          cd backend
+          dotnet build MOBA.slnx --configuration Release --no-restore
+
+      - name: Test
+        run: 
+          cd backend
+          dotnet test MOBA.slnx --configuration Release --no-build
+  
+  gen-schemas:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install FlatBuffers
+        run: 
+          sudo apt-get update
+          sudo apt-get install -y flatbuffers-compiler
+      
+      - name: Run Schema Generation
+        run:
+          chmod +x tools/gen_schemas.schemas
+          .tools/gen_schemas.sh
+      
+      - name: Check Generated Files
+        run: 
+          git diff --exit-code
