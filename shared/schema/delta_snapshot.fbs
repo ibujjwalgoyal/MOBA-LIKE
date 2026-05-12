@@ -1,5 +1,5 @@
-include "hero_state.fbs"
-include "game_event.fbs"
+include "hero_state.fbs";
+include "game_event.fbs";
 
 namespace MOBA.Schema;
 
