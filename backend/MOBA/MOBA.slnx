@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="AuthService/AuthService.csproj" />
+  <Project Path="LobbyService/LobbyService.csproj" />
+  <Project Path="MatchmakingService/MatchmakingService.csproj" />
+  <Project Path="OrchestratorService/OrchestratorService.csproj" />
+  <Project Path="ProfileService/ProfileService.csproj" />
+</Solution>
