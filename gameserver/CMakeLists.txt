@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(MOBAGameServer VERSION 0.1.0 LANGUAGES CXX)
+project(MOBAGameServer VERSION 0.1.0 LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -133,7 +133,7 @@ target_link_libraries(gameserver PRIVATE
     enet_static
     lua54
     sol2
-    flatbuffers::flatbuffers
+    flatbuffers
     libfixmath
     spdlog::spdlog
 )
@@ -166,7 +166,7 @@ if(BUILD_TESTS)
         enet_static
         lua54
         sol2
-        flatbuffers::flatbuffers
+        flatbuffers
         libfixmath
         spdlog::spdlog
     )
