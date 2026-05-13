@@ -1,0 +1,40 @@
+namespace moba;
+
+// All coordinates use fixed-point with scale 1000 (int32)
+table MoveCommand {
+  target_x: int32;
+  target_y: int32;
+}
+
+table CastAbilityCommand {
+  ability_slot: uint8;   // 0-5 (Q,W,E,R, D, F)
+  target_x: int32;       // 0 if no ground target
+  target_y: int32;
+  target_entity_id: uint32; // 0 if no unit target
+}
+
+table BuyItemCommand {
+  item_id: int32;
+}
+
+table AttackMoveCommand {
+  target_x: int32;
+  target_y: int32;
+}
+
+union CommandData {
+  MoveCommand,
+  CastAbilityCommand,
+  BuyItemCommand,
+  AttackMoveCommand
+}
+
+table PlayerCommand {
+  entity_id: uint32;
+  command: CommandData;
+}
+
+table CommandBatch {
+  tick: uint32;               // client's current predicted tick
+  commands: [PlayerCommand];
+}

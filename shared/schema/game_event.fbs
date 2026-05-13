@@ -1,34 +1,49 @@
-namespace MOBA.Schema;
+include "hero_state.fbs";   // for Vec3 if needed, but not here.
 
-enum GameEventType : byte
-{
-    Unknown = 0,
-    HeroKiller = 1,
-    TowerDestroyed = 2,
-    AbilityCast = 3,
-    ItemPurchased = 4,
-    LevelUp = 5,
-    GoldEarned = 6,
-    MatchEnded = 7
+namespace moba;
+
+table KillEvent {
+  killer_id: uint32;
+  victim_id: uint32;
+  gold_reward: int32;
+  xp_reward: int32;
 }
 
-table GameEvent
-{
-    tick:uint;
-    timestamp_ms:ulong;
-
-    event_type:GameEventType;
-
-    source_entity_id:uint;
-    target_entity_id:uint;
-
-    ability_id:uint;
-    item_id:uint;
-
-    gold_amount:uint;
-    experience_amount:uint;
-
-    message:string;
+table TowerDestroyedEvent {
+  tower_id: uint32;
+  team_destroyed: uint8;
+  last_hitter_id: uint32;
 }
 
-root_type GameEvent;
+table ItemPurchasedEvent {
+  buyer_id: uint32;
+  item_id: int32;
+  cost: int32;
+}
+
+table AbilityCastEvent {
+  caster_id: uint32;
+  ability_id: int32;
+  target_x: int32;
+  target_y: int32;
+  target_entity_id: uint32;
+}
+
+table RoshanEvent {
+  is_alive: bool;
+  respawn_tick: uint32;
+}
+
+table GameEndEvent {
+  winning_team: uint8;
+  duration_ticks: uint32;
+}
+
+union GameEvent {
+  KillEvent,
+  TowerDestroyedEvent,
+  ItemPurchasedEvent,
+  AbilityCastEvent,
+  RoshanEvent,
+  GameEndEvent
+}

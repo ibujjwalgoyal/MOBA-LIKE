@@ -1,0 +1,16 @@
+namespace moba;
+
+table ClientHello {
+  protocol_version: uint32 = 1;
+  auth_token: string;    // JWT or session token from lobby
+}
+
+table ServerHello {
+  accepted: bool;
+  player_entity_id: uint32;
+  server_tick_rate: uint32; // ticks per second
+}
+
+table Disconnect {
+  reason: string;
+}

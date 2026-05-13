@@ -1,0 +1,30 @@
+namespace moba;
+
+table HeroPick {
+  player_id: uint32;
+  hero_id: int32;
+  slot: uint8;         // 0-4 for team pick slots
+}
+
+table HeroBan {
+  player_id: uint32;    // who banned (or 0 if system)
+  hero_id: int32;
+}
+
+table LobbyState {
+  lobby_id: string;
+  phase: uint8;        // 0=waiting, 1=drafting, 2=ready, 3=in_game
+  players: [uint32];   // list of player ids
+  radiant_picks: [HeroPick];
+  dire_picks: [HeroPick];
+  bans: [HeroBan];
+}
+
+table DraftState {
+  current_phase: uint8;
+  time_remaining_ms: uint32;
+  active_player_id: uint32;
+  radiant_picks: [HeroPick];
+  dire_picks: [HeroPick];
+  bans: [HeroBan];
+}

@@ -1,0 +1,43 @@
+namespace moba;
+
+table CreepState {
+  entity_id: uint32;
+  team: uint8;
+  pos_x: int32;
+  pos_y: int32;
+  health: int32;
+  max_health: int32;
+  gold_bounty: int32;
+  xp_bounty: int32;
+  is_alive: bool;
+}
+
+table TowerState {
+  entity_id: uint32;
+  team: uint8;
+  pos_x: int32;
+  pos_y: int32;
+  health: int32;
+  max_health: int32;
+  tier: uint8;            // 1-4
+  lane: uint8;            // 0=top,1=mid,2=bot
+  is_alive: bool;
+}
+
+table ProjectileState {
+  entity_id: uint32;
+  pos_x: int32;
+  pos_y: int32;
+  velocity_x: int32;
+  velocity_y: int32;
+  source_id: uint32;
+  target_id: uint32;
+  ability_id: int32;
+}
+
+table TreeState {
+  entity_id: uint32;
+  pos_x: int32;
+  pos_y: int32;
+  is_alive: bool;
+}

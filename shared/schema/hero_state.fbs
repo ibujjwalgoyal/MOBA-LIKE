@@ -1,54 +1,18 @@
-namespace MOBA.Schema;
+namespace moba;
 
-enum Team : byte
-{
-    Neutral = 0,
-    Radiant = 1,
-    Dire = 2
+table HeroState {
+  entity_id: uint32;
+  team: uint8;            // 0 = Radiant, 1 = Dire
+  pos_x: int32;           // fixed-point, scale 1000
+  pos_y: int32;
+  velocity_x: int32;      // fixed-point
+  velocity_y: int32;
+  health: int32;          // fixed-point
+  max_health: int32;
+  mana: int32;
+  max_mana: int32;
+  level: uint16;
+  gold: int32;            // fixed-point (can be used for reliable gold display)
+  status_effects: uint64; // bitmask of status effect IDs (32 bits enough? use uint64 for future)
+  is_alive: bool;
 }
-
-table Vec2
-{
-    x:int;
-    y:int;
-}
-
-table StatusEffect
-{
-    effect_id:int;
-    stack:ushort;
-    duration_ms:uint;
-    source_entity_id:uint;
-}
-
-table HeroState
-{
-    entity_id:uint;
-    player_id:uint;
-
-    hero_name:string;
-    team:Team;
-
-    position:Vec2;
-    facing:int;
-
-    health:int;
-    max_health:int;
-
-    mana:int;
-    max_mana:int;
-
-    level:ushort;
-    experience:uint;
-
-    gold:uint;
-
-    movement_speed:int;
-
-    is_alive:bool;
-    respawn_time_ms:uint;
-
-    status_effect:[StatusEffect];
-}
-
-root_type HeroState;
